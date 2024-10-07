@@ -40,19 +40,14 @@
   "main": "dist/index.js",
   "type": "module",
   "oclif": {
-    "bin": "mynewcli",
-    "dirname": "mynewcli",
+    "bin": "myc",
+    "dirname": "myc",
     "commands": "./dist/commands",
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-plugins"
     ],
-    "topicSeparator": " ",
-    "topics": {
-      "hello": {
-        "description": "Say hello to the world and others"
-      }
-    }
+    "topicSeparator": " "
   },
   "repository": "https://github.com/meer-sagor/OS-dev-config",
   "scripts": {
