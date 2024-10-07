@@ -1,5 +1,7 @@
 import {Command} from "@oclif/core";
 import {execSync} from "node:child_process";
+import {isPackageInstalled} from "../../../utils/isPackageInstalled.js";
+import {PackageChecker} from "../../../utils/PackageChecker.js";
 
 
 export default class InstallDocker extends Command {
@@ -7,16 +9,6 @@ export default class InstallDocker extends Command {
     static examples = [
         `$ docker-cli install`,
     ]
-
-    // Check if Docker is installed
-    checkDockerInstalled(): boolean {
-        try {
-            execSync('docker --version', { stdio: 'ignore' })
-            return true
-        } catch (error) {
-            return false
-        }
-    }
 
     // Install Docker using shell commands
     installDocker() {
@@ -37,7 +29,7 @@ export default class InstallDocker extends Command {
 
     // Run the CLI command
     async run() {
-        if (this.checkDockerInstalled()) {
+        if (PackageChecker.checkDocker()) {
             this.log('Docker is already installed.')
         } else {
             this.installDocker()
