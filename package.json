@@ -1,17 +1,18 @@
 {
-  "name": "myc",
+  "name": "gearup-cli",
   "description": "Personal CLI",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Meer Sagor",
   "bin": {
-    "myc": "bin/run.js"
+    "gearup": "bin/run.js"
   },
-  "bugs": "https://github.com/meer-sagor/OS-dev-config/issues",
+  "bugs": "https://github.com/meer-sagor/GearUp-Cli/issues",
   "dependencies": {
     "@inquirer/prompts": "^7.0.0",
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^5"
+    "@oclif/plugin-plugins": "^5",
+    "axios": "^1.7.7"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
@@ -33,7 +34,7 @@
     "/dist",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/meer-sagor/OS-dev-config",
+  "homepage": "https://github.com/meer-sagor/GearUp-Cli",
   "keywords": [
     "oclif"
   ],
@@ -41,8 +42,8 @@
   "main": "dist/index.js",
   "type": "module",
   "oclif": {
-    "bin": "myc",
-    "dirname": "myc",
+    "bin": "gearup",
+    "dirname": "gearup",
     "commands": "./dist/commands",
     "plugins": [
       "@oclif/plugin-help",
@@ -50,7 +51,7 @@
     ],
     "topicSeparator": " "
   },
-  "repository": "https://github.com/meer-sagor/OS-dev-config",
+  "repository": "https://github.com/meer-sagor/GearUp-Cli",
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
     "lint": "eslint . --ext .ts",
@@ -58,7 +59,7 @@
     "posttest": "yarn lint",
     "prepack": "oclif manifest && oclif readme",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif readme && git add mynewcli/README.md"
+    "version": "oclif readme && git add README.md"
   },
   "types": "dist/index.d.ts"
 }
