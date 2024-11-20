@@ -3006,7 +3006,7 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==
 
-eslint-config-oclif-typescript@^3.1.12:
+eslint-config-oclif-typescript@^3:
   version "3.1.12"
   resolved "https://registry.yarnpkg.com/eslint-config-oclif-typescript/-/eslint-config-oclif-typescript-3.1.12.tgz#91089e770854cd29b69f359dc1b9d847ef588b18"
   integrity sha512-hEXU/PEJyjeLiTrCmgcmx0+FHwVpqipkKSykesdMsk2v43Mqh5bq2j3cyxHXZBCOxpTACVlM6KG7d4LFaWoVHQ==

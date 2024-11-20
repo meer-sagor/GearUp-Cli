@@ -1,9 +1,11 @@
-import {Platform} from '@enums/platform.js';
+
 import {Command} from '@oclif/core';
-import PackageHelper from '@utils/package-helper.ts';
 import {exec, execSync} from 'node:child_process';
 import * as fs from 'node:fs';
 import * as readline from 'node:readline';
+
+import { Platform } from '../../enums/platform.js';
+import PackageHelper from '../../utils/package-helper.js';
 
 export default class TunnelCommand extends Command {
     static description = 'Check for cloudflared, install if necessary, and start a tunnel';

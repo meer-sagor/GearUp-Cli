@@ -1,7 +1,8 @@
-import {Platform} from "@enums/platform.ts";
 import {Command} from "@oclif/core";
-import PackageHelper from "@utils/package-helper.ts";
 import {execSync} from "node:child_process";
+
+import {Platform} from "../../../enums/platform.js";
+import PackageHelper from "../../../utils/package-helper.js";
 
 
 export default class InstallDocker extends Command {
@@ -14,16 +15,16 @@ export default class InstallDocker extends Command {
     installDockerLinux() {
         this.log('Installing Docker on Linux...');
         try {
-            execSync('sudo apt update', { stdio: 'inherit' })
-            execSync('sudo apt install -y docker.io', { stdio: 'inherit' })
-            execSync(`sudo usermod -aG docker ${process.env.USER}`, { stdio: 'inherit' })
-            execSync('sudo systemctl enable docker', { stdio: 'inherit' })
-            execSync('sudo systemctl start docker', { stdio: 'inherit' })
+            execSync('sudo apt update', {stdio: 'inherit'})
+            execSync('sudo apt install -y docker.io', {stdio: 'inherit'})
+            execSync(`sudo usermod -aG docker ${process.env.USER}`, {stdio: 'inherit'})
+            execSync('sudo systemctl enable docker', {stdio: 'inherit'})
+            execSync('sudo systemctl start docker', {stdio: 'inherit'})
 
             this.log('Docker has been installed.');
             this.log('Please log out and log back in, or restart your computer, to apply Docker group changes.');
         } catch {
-            this.error('Failed to install Docker.', { exit: 1 })
+            this.error('Failed to install Docker.', {exit: 1})
         }
     }
 
@@ -32,15 +33,15 @@ export default class InstallDocker extends Command {
         this.log("Installing Docker on macOS...");
         try {
             if (!PackageHelper.isPackageInstalled('brew')) {
-                this.error('Homebrew is not installed. Please install it from https://brew.sh/', { exit: 1 });
-              }
+                this.error('Homebrew is not installed. Please install it from https://brew.sh/', {exit: 1});
+            }
 
-            execSync("brew install --cask docker", { stdio: "inherit" });
+            execSync("brew install --cask docker", {stdio: "inherit"});
 
-           this.log('Docker has been installed on macOS.');
+            this.log('Docker has been installed on macOS.');
             this.log('You may need to launch the Docker Desktop application from your Applications folder.');
         } catch {
-            this.error("Failed to install Docker on macOS.", { exit: 1 });
+            this.error("Failed to install Docker on macOS.", {exit: 1});
         }
     }
 
