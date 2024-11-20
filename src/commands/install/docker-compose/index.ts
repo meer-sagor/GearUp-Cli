@@ -1,8 +1,7 @@
+import {Platform} from '@enums/platform.ts'
 import {Command} from '@oclif/core'
+import PackageHelper from '@utils/package-helper.ts'
 import * as os from 'node:os'
-
-import {Platform} from '../../../enums/platform.js'
-import PackageHelper from '../../../utils/package-helper.js'
 
 export default class InstallDockerCompose extends Command {
   static description = 'Check OS and install docker-compose if necessary'

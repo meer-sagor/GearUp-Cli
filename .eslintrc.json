@@ -1,3 +1,10 @@
 {
-  "extends": ["oclif", "oclif-typescript", "prettier"]
+  "extends": ["oclif", "oclif-typescript", "prettier"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
+  }
 }

@@ -1,10 +1,9 @@
+import {Platform} from '@enums/platform.js';
 import {Command} from '@oclif/core';
-import {execSync, exec} from 'node:child_process';
-import * as fs from 'fs';
-import * as readline from 'readline';
-import * as os from 'node:os';
-import PackageHelper from '../../../utils/package-helper.js';
-import {Platform} from '../../../enums/platform.js';
+import PackageHelper from '@utils/package-helper.ts';
+import {exec, execSync} from 'node:child_process';
+import * as fs from 'node:fs';
+import * as readline from 'node:readline';
 
 export default class TunnelCommand extends Command {
     static description = 'Check for cloudflared, install if necessary, and start a tunnel';
@@ -12,10 +11,10 @@ export default class TunnelCommand extends Command {
     // Check if cloudflared is installed
     async checkCloudflared() {
         try {
-            execSync('cloudflared --version', { stdio: 'ignore' });
+            execSync('cloudflared --version', {stdio: 'ignore'});
             this.log('cloudflared is already installed.');
             return true;
-        } catch (error) {
+        } catch {
             this.log('cloudflared is not installed.');
             return false;
         }
@@ -31,15 +30,38 @@ export default class TunnelCommand extends Command {
                 execSync('sudo mv cloudflared /usr/local/bin/');
                 execSync('sudo chmod +x /usr/local/bin/cloudflared');
             } else if (platform === Platform.MAC) {
-                execSync('brew install cloudflare/cloudflare/cloudflared', { stdio: 'inherit' });
+                execSync('brew install cloudflare/cloudflare/cloudflared', {stdio: 'inherit'});
             } else {
-                this.error('Unsupported platform for automatic cloudflared installation.', { exit: 1 });
+                this.error('Unsupported platform for automatic cloudflared installation.', {exit: 1});
             }
 
             this.log('cloudflared installed successfully.');
         } catch (error) {
-            this.error('Failed to install cloudflared.', { exit: 1 });
+            this.error('Failed to install cloudflared.', {exit: 1});
         }
+    }
+
+    // Main command logic
+    async run() {
+        const platform = PackageHelper.checkOS();
+
+        const cloudflaredInstalled = await this.checkCloudflared();
+        if (!cloudflaredInstalled) {
+            await this.installCloudflared(platform);
+        }
+
+        // // Ask user for tunnel URL
+        // const {tunnelUrl} = await this.prompt([
+        //     {
+        //         type: 'input',
+        //         name: 'tunnelUrl',
+        //         message: 'Enter the URL to tunnel (e.g., http://localhost:8080):',
+        //         validate: (input: string) => input.startsWith('http') ? true : 'Please enter a valid URL',
+        //     }
+        // ]);
+        //
+        // // Start the tunnel
+        // await this.startTunnel(tunnelUrl);
     }
 
     // Start the tunnel using nohup and capture the tunnel URL
@@ -65,28 +87,5 @@ export default class TunnelCommand extends Command {
                 rl.close();
             }
         });
-    }
-
-    // Main command logic
-    async run() {
-        const platform = PackageHelper.checkOS();
-
-        const cloudflaredInstalled = await this.checkCloudflared();
-        if (!cloudflaredInstalled) {
-            await this.installCloudflared(platform);
-        }
-
-        // Ask user for tunnel URL
-        const { tunnelUrl } = await this.prompt([
-            {
-                type: 'input',
-                name: 'tunnelUrl',
-                message: 'Enter the URL to tunnel (e.g., http://localhost:8080):',
-                validate: (input: string) => input.startsWith('http') ? true : 'Please enter a valid URL',
-            }
-        ]);
-
-        // Start the tunnel
-        await this.startTunnel(tunnelUrl);
     }
 }

@@ -1,8 +1,7 @@
+import {Platform} from "@enums/platform.ts";
 import {Command} from "@oclif/core";
+import PackageHelper from "@utils/package-helper.ts";
 import {execSync} from "node:child_process";
-
-import {Platform} from "../../../enums/platform.js";
-import PackageHelper from "../../../utils/package-helper.js";
 
 
 export default class InstallDocker extends Command {
