@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { execSync } from 'node:child_process';
+import {execSync} from 'node:child_process';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 
+// eslint-disable-next-line unicorn/no-static-only-class
 export default class PackageHelper {
+    // eslint-disable-next-line valid-jsdoc
     /**
      * Check the current user's operating system.
      * Returns the platform string ('linux', 'darwin', 'win32').
@@ -15,20 +17,6 @@ export default class PackageHelper {
         }
 
         return platform;
-    }
-
-    /**
-     * Check if a package (command) is installed.
-     * @param {string} packageName The name of the package/command (e.g., 'docker-compose').
-     * @returns {boolean} True if installed, false otherwise.
-     */
-    static isPackageInstalled(packageName: string): boolean {
-        try {
-            execSync(`${packageName} --version`, { stdio: 'ignore' });
-            return true;
-        } catch (error) {
-            return false;
-        }
     }
 
     /**
@@ -53,6 +41,21 @@ export default class PackageHelper {
         });
     }
 
+    /**
+     * Check if a package (command) is installed.
+     * @param {string} packageName The name of the package/command (e.g., 'docker-compose').
+     * @returns {boolean} True if installed, false otherwise.
+     */
+    static isPackageInstalled(packageName: string): boolean {
+        try {
+            execSync(`${packageName} --version`, {stdio: 'ignore'});
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    // eslint-disable-next-line valid-jsdoc
     /**
      * Set the file permissions of a file.
      * @param {string} filePath The path to the file.
