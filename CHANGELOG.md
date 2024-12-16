@@ -1,8 +1,8 @@
-# Gearup CLI
+# Gearup-CLI
 
 ## 0.0.1
 ### Feature
-- Install Docker
-- Install Docker Compose
-- Cloudflared Tunnel
+- gearup install docker
+- gearup install docker-compose
+- gearup tunnel
 

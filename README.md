@@ -1,12 +1,12 @@
-# Gearup CLI Documentation
+# Gearup-CLI Documentation
 
 ## Overview
-The gearup CLI is a tool designed to simplify and speed up the setup process for development environments. It automates the installation of essential tools, saving time and reducing manual effort.
+The gearup-cli is a tool designed to simplify and speed up the setup process for development environments. It automates the installation of essential tools, saving time and reducing manual effort.
 
 ### Current Features
-- Install Docker
-- Install Docker Compose
-- Cloudflared Tunnel
+- gearup install docker
+- gearup install docker-compose
+- gearup tunnel
 
 ### Planned Features
 - Install curl
@@ -26,11 +26,11 @@ The gearup CLI is a tool designed to simplify and speed up the setup process for
 ### Install the CLI
 1. with npm:
    ```bash
-   npm install -g gearup
+   npm install -g gearup-cli
    ```
 1. with yarn:
    ```bash
-   yarn add global gearup
+   yarn add global gearup-cli
    ```
 
 ---
