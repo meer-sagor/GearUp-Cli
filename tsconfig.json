@@ -1,0 +1,50 @@
+// {
+//   "compilerOptions": {
+//     "declaration": true,
+//     "module": "Node16",
+//     "outDir": "dist",
+//     "rootDir": "src",
+//     "strict": true,
+//     "target": "es2022",
+//     "moduleResolution": "node16",
+//     "emitDeclarationOnly": true,
+//     "allowImportingTsExtensions": true,
+//     "baseUrl": "src",
+//     "paths": {
+//       "@utils/*": ["utils/*"], // Map '@utils' to 'src/utils'
+//       "@enums/*": ["enums/*"], // Map '@enums' to 'src/enums'
+//       "@commands/*": ["commands/*"] // Map '@enums' to 'src/enums'
+//     }
+//   },
+//   "include": ["./src/**/*"],
+//   "ts-node": {
+//     "esm": true
+//   }
+// }
+
+
+{
+ "compilerOptions": {
+   "declaration": true,
+   "module": "NodeNext", // Ensures compatibility with ESM syntax
+   "moduleResolution": "NodeNext", // ESM-aware module resolution
+   "target": "ES2022", // Modern JavaScript features
+   "outDir": "dist", // Output directory for compiled files
+   "strict": true, // Enables all strict type-checking options
+   "resolveJsonModule": true, // Allows importing JSON files
+   "esModuleInterop": true, // Provides interoperability between CommonJS and ESM
+   "skipLibCheck": true, // Skips type checking for node_modules to improve build time
+  //  "baseUrl": "src",
+  //  "paths": {
+  //    "@utils/*": ["./src/utils/*"], // Map '@utils' to 'src/utils'
+  //    "@enums/*": ["./src/enums/*"], // Map '@enums' to 'src/enums'
+  //    "@commands/*": ["./src/commands/*"] // Map '@enums' to 'src/enums'
+  //  }
+ },
+ "include": [
+   "./src/**/*" // Include all source files
+ ],
+ "ts-node": {
+   "esm": true // Allows `ts-node` to handle ESM syntax
+ }
+}

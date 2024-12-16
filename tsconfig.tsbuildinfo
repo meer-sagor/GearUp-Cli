@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/commands/install/index.ts","./src/commands/install/docker/index.ts","./src/commands/install/docker-compose/index.ts","./src/commands/tunnel/index.ts","./src/enums/platform.ts","./src/utils/package-helper.ts"],"version":"5.6.2"}
