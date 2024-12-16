@@ -22,6 +22,7 @@ export default class InstallDockerCompose extends Command {
         PackageHelper.setFilePermissions(destination, '755');
   
         this.log(`docker-compose installed successfully at ${destination}`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error:any) {
       this.error(`Failed to install docker-compose for ${platform}. Error: ${error.message}`, { exit: 1 });
       }
