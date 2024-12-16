@@ -1,4 +1,5 @@
 
+import { input } from '@inquirer/prompts';
 import {Command} from '@oclif/core';
 import {exec, execSync} from 'node:child_process';
 import * as fs from 'node:fs';
@@ -10,60 +11,73 @@ import PackageHelper from '../../utils/package-helper.js';
 export default class TunnelCommand extends Command {
     static description = 'Check for cloudflared, install if necessary, and start a tunnel';
 
-    // Check if cloudflared is installed
-    async checkCloudflared() {
+    // Install cloudflared based on platform
+    installCloudflaredLinux() {
         try {
-            execSync('cloudflared --version', {stdio: 'ignore'});
-            this.log('cloudflared is already installed.');
-            return true;
+            execSync('curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared');
+            execSync('sudo mv cloudflared /usr/local/bin/');
+            execSync('sudo chmod +x /usr/local/bin/cloudflared');
+            this.log('cloudflared installed successfully.');
         } catch {
-            this.log('cloudflared is not installed.');
-            return false;
+            this.error('Failed to install cloudflared.', {exit: 1});
         }
     }
 
-    // Install cloudflared based on platform
-    async installCloudflared(platform: string) {
+    installCloudflaredMacOS() {
         try {
             this.log('Installing cloudflared...');
 
-            if (platform === Platform.LINUX) {
-                execSync('curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared');
-                execSync('sudo mv cloudflared /usr/local/bin/');
-                execSync('sudo chmod +x /usr/local/bin/cloudflared');
-            } else if (platform === Platform.MAC) {
-                execSync('brew install cloudflare/cloudflare/cloudflared', {stdio: 'inherit'});
-            } else {
-                this.error('Unsupported platform for automatic cloudflared installation.', {exit: 1});
-            }
+            execSync('brew install cloudflare/cloudflare/cloudflared', {stdio: 'inherit'});
 
             this.log('cloudflared installed successfully.');
-        } catch (error) {
+        } catch {
             this.error('Failed to install cloudflared.', {exit: 1});
         }
+    }
+
+    installCloudflaredWindows() {
+        this.error('Unsupported platform for automatic cloudflared installation.', {exit: 1});
     }
 
     // Main command logic
     async run() {
         const platform = PackageHelper.checkOS();
 
-        const cloudflaredInstalled = await this.checkCloudflared();
-        if (!cloudflaredInstalled) {
-            await this.installCloudflared(platform);
+        if(PackageHelper.isPackageInstalled('cloudflared')){
+            this.log('cloudflared is already installed.');
+        }else{
+            switch (platform) {
+                case Platform.LINUX: {
+                    this.installCloudflaredLinux()
+                    break
+                }
+
+                case Platform.MAC: {
+                    this.installCloudflaredMacOS()
+                    break
+                }
+
+                case Platform.WINDOWS: {
+                    this.installCloudflaredWindows()
+                    break
+                }
+
+                default: {
+                    this.error("Unsupported platform. Docker installation is only supported for Linux, macOS, and Windows.");
+                }
+
+            }
         }
 
-        // // Ask user for tunnel URL
-        // const {tunnelUrl} = await this.prompt([
-        //     {
-        //         type: 'input',
-        //         name: 'tunnelUrl',
-        //         message: 'Enter the URL to tunnel (e.g., http://localhost:8080):',
-        //         validate: (input: string) => input.startsWith('http') ? true : 'Please enter a valid URL',
-        //     }
-        // ]);
-        //
-        // // Start the tunnel
-        // await this.startTunnel(tunnelUrl);
+        // Ask user for tunnel URL
+        const tunnelUrl = await input({
+            message: 'Enter the URL to tunnel (e.g., localhost:8080):',
+            required: true,
+            validate: (input: string) => input.startsWith('http') ? true : 'Please enter a valid URL',
+        });
+
+        // Start the tunnel
+        await this.startTunnel(tunnelUrl);
     }
 
     // Start the tunnel using nohup and capture the tunnel URL

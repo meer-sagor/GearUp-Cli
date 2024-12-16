@@ -8,7 +8,7 @@ import PackageHelper from "../../../utils/package-helper.js";
 export default class InstallDocker extends Command {
     static description = 'Install Docker if not already installed'
     static examples = [
-        `$ docker-cli install`,
+        `$ gearup install docker`,
     ]
 
     // Install Docker using shell commands
